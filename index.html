@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siavash & Mona's Wedding Party</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        :root {
+            --gold: #c5a059;
+            --dark: #2c3e50;
+            --light: #f9f7f2;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), 
+                        url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Language Switcher */
+        .lang-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.9);
+            padding: 10px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .lang-switch select {
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Hero Section */
+        .container {
+            max-width: 800px;
+            margin: 100px auto;
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            animation: fadeIn 2s ease;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .details {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin: 30px 0;
+        }
+
+        .rsvp-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--gold);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .rsvp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(197, 160, 89, 0.4);
+        }
+
+        [lang="fa"] { font-family: 'Vazirmatn', sans-serif; direction: rtl; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            .container { margin: 50px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lang-switch">
+        <i class="fas fa-globe"></i>
+        <select id="langSelector" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="it">Italiano</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="fa">Persian (فارسی)</option>
+        </select>
+    </div>
+
+    <div class="music-player">
+        <span style="margin-right: 10px; font-size: 0.8rem;">♫ Solo de Piano - Soltane Ghalbha</span>
+        <audio id="bgMusic" loop>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
+        <button onclick="toggleMusic()" id="musicBtn" style="border:none; background:none; cursor:pointer; color:var(--gold);">
+            <i class="fas fa-play"></i>
+        </button>
+    </div>
+
+    <div class="container">
+        <div id="content">
+            <h1 id="names">Siavash & Mona</h1>
+            <p class="details" id="inviteText">
+                We are delighted to invite you to celebrate our wedding party!
+            </p>
+            <div class="details">
+                <p><strong><i class="far fa-calendar-alt"></i> <span id="dateText">Summer 2026</span></strong></p>
+                <p><i class="fas fa-map-marker-alt"></i> <span id="locationText">Details to follow</span></p>
+            </div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScA8EZlrBCte2PETn6pnwYMD0EIgbU1cro9ndRy2Dzi9g-l2w/viewform" 
+               class="rsvp-btn" id="rsvpBtn" target="_blank">
+                RSVP HERE
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                invite: "We are delighted to invite you to celebrate our wedding party!",
+                date: "Summer 2026",
+                loc: "Montreal, Quebec",
+                rsvp: "RSVP HERE"
+            },
+            it: {
+                invite: "Siamo lieti di invitarvi a festeggiare il nostro matrimonio!",
+                date: "Estate 2026",
+                loc: "Montréal, Québec",
+                rsvp: "RISPONDI QUI"
+            },
+            fr: {
+                invite: "Nous sommes ravis de vous inviter à célébrer notre fête de mariage !",
+                date: "Été 2026",
+                loc: "Montréal, Québec",
+                rsvp: "RÉPONDRE ICI"
+            },
+            de: {
+                invite: "Wir freuen uns, Sie zu unserer Hochzeitsfeier einzuladen!",
+                date: "Sommer 2026",
+                loc: "Montreal, Quebec",
+                rsvp: "JETZT ANMELDEN"
+            },
+            fa: {
+                invite: "با کمال مسرت از شما دعوت می‌کنیم تا در جشن عروسی ما همراه ما باشید",
+                date: "تابستان ۱۴۰۵",
+                loc: "مونترال، کبک",
+                rsvp: "تایید حضور"
+            }
+        };
+
+        function changeLanguage(lang) {
+            const content = document.getElementById('content');
+            if (lang === 'fa') {
+                content.setAttribute('lang', 'fa');
+            } else {
+                content.removeAttribute('lang');
+            }
+            
+            document.getElementById('inviteText').innerText = translations[lang].invite;
+            document.getElementById('dateText').innerText = translations[lang].date;
+            document.getElementById('locationText').innerText = translations[lang].loc;
+            document.getElementById('rsvpBtn').innerText = translations[lang].rsvp;
+        }
+
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicBtn');
+            if (music.paused) {
+                music.play();
+                btn.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                music.pause();
+                btn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        }
+    </script>
+</body>
+</html>
